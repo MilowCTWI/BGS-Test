@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
 {
-    [SerializeField]
-    private Animator _animator;
+    private Animator[] _animators;
 
     private PlayerManager _manager;
 
@@ -14,6 +13,19 @@ public class PlayerAnimationController : MonoBehaviour
     public void Initialize(PlayerManager manager)
     {
         _manager = manager;
+
+        _animators = GetComponentsInChildren<Animator>();
+    }
+
+    /// <summary>
+    /// Remove old animators and pick up animators, should be run every time clothing is changed
+    /// </summary>
+    public void UpdateAnimators()
+    {
+        _animators = GetComponentsInChildren<Animator>();
+
+        _idling = false;
+        SetWalkingAnimation(false, Vector2.down);
     }
 
     public void SetWalkingAnimation(bool walking, Vector2 direction)
@@ -23,13 +35,13 @@ public class PlayerAnimationController : MonoBehaviour
         else if (!walking)
         {
             if (_lastInput.y < -.1f)
-                _animator.Play("PlayerIdleDown");
+                SetAnimation("PlayerIdleDown");
             else if (_lastInput.y > .1f)
-                _animator.Play("PlayerIdleUp");
-            else if (_lastInput.x < .1f)
-                _animator.Play("PlayerIdleLeft");
-            else if (_lastInput.x > -.1f)
-                _animator.Play("PlayerIdleRight");
+                SetAnimation("PlayerIdleUp");
+            else if (_lastInput.x < -.1f)
+                SetAnimation("PlayerIdleLeft");
+            else if (_lastInput.x > .1f)
+                SetAnimation("PlayerIdleRight");
 
             _idling = true;
             return;
@@ -39,14 +51,26 @@ public class PlayerAnimationController : MonoBehaviour
             _idling = false;
 
         if (direction.y < -.1f)
-            _animator.Play("PlayerWalkDown");
+            SetAnimation("PlayerWalkDown");
         else if (direction.y > .1f)
-            _animator.Play("PlayerWalkUp");
+            SetAnimation("PlayerWalkUp");
         else if (direction.x < -.1f)
-            _animator.Play("PlayerWalkLeft");
+            SetAnimation("PlayerWalkLeft");
         else if (direction.x > .1f)
-            _animator.Play("PlayerWalkRight");
+            SetAnimation("PlayerWalkRight");
 
         _lastInput = direction;
+    }
+
+    /// <summary>
+    /// Sets animation for all child clothing
+    /// </summary>
+    /// <param name="animName"></param>
+    private void SetAnimation(string animName)
+    {
+        foreach (var animator in _animators)
+        {
+            animator.Play(animName);
+        }
     }
 }
