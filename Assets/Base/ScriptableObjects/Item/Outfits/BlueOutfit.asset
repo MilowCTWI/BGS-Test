@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7656aa28c1bca214994463006dec826e, type: 3}
+  m_Name: BlueOutfit
+  m_EditorClassIdentifier: 
+  Name: BlueOutfit
+  Value: 300
+  Sprite: {fileID: 317925948, guid: 85e5ac37061956444a552db273c203af, type: 3}
+  Prefab: {fileID: 2440312137821752386, guid: 001636e7703723940aa1b2774b9345c9, type: 3}
+  Type: 0
+  ClothingType: 0
